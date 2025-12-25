@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.goboard">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Goboard">
+
+        <service
+            android:name=".GoboardService"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_INPUT_METHOD"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.view.InputMethod" />
+            </intent-filter>
+            <meta-data
+                android:name="android.view.im"
+                android:resource="@xml/method" />
+        </service>
+
+        <activity
+            android:name=".settings.KeyCustomizationActivity"
+            android:exported="true"
+            android:label="Customize Keys" />
+
+        <activity
+            android:name=".settings.SettingsActivity"
+            android:exported="true"
+            android:label="@string/title_activity_settings">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.action.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
