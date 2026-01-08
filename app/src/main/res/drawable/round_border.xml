@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- Set the background color of the TextView (e.g., white) -->
+    <solid android:color="@android:color/transparent" />
+
+    <!-- Set the border width and color -->
+    <stroke
+        android:width="1.5dp"
+        android:color="#50a9a9a9"
+/> <!-- Example: Red border -->
+
+    <!-- Set the corner radius for the rounded corners -->
+    <corners android:radius="10dp" />
+
+    <!-- Add some padding for the text inside, so it doesn't overlap the border -->
+    <padding
+        android:bottom="8dp"
+        android:left="8dp"
+        android:right="8dp"
+        android:top="8dp" />
+
+</shape>

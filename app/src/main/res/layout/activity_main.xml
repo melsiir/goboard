@@ -1,10 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-    
-</androidx.constraintlayout.widget.ConstraintLayout>
+<LinearLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_height="match_parent"
+     android:layout_width="match_parent"
+     android:gravity="center_horizontal"
+     android:padding="24dp"
+     android:orientation="vertical">
+
+    <TextView
+         android:layout_height="wrap_content"
+         android:layout_width="wrap_content"
+         android:layout_marginBottom="24dp"
+         android:textSize="22sp"
+         android:text="Net Credit Calculator"
+         android:textStyle="bold" />
+
+    <EditText
+         android:layout_height="wrap_content"
+         android:layout_width="match_parent"
+         android:hint="Enter amount"
+         android:inputType="numberDecimal"
+         android:background="@drawable/round_border"
+         android:id="@+id/etAmount" />
+
+    <EditText
+         android:layout_height="wrap_content"
+         android:layout_width="match_parent"
+         android:hint="Enter discount % (e.g. 15)"
+         android:layout_marginTop="16dp"
+         android:inputType="numberDecimal"
+        android:background="@drawable/round_border"
+         android:id="@+id/etDiscount" />
+
+    <TextView
+         android:layout_height="wrap_content"
+         android:layout_width="wrap_content"
+         android:textSize="18sp"
+         android:layout_marginTop="24dp"
+         android:id="@+id/tvResult"
+         android:text=""
+         android:textStyle="bold" />
+
+    <Button
+         android:layout_height="wrap_content"
+         android:layout_width="match_parent"
+         android:layout_marginTop="24dp"
+         android:id="@+id/btnCalculate"
+         android:text="Calculate Net Amount" />
+
+    <Space
+         android:layout_height="0dp"
+         android:layout_width="match_parent"
+         android:layout_weight="1" />
+
+    <TextView
+         android:layout_height="wrap_content"
+         android:layout_width="match_parent"
+         android:gravity="center"
+         android:id="@+id/madeIn"
+         android:text="made with love by " />
+
+    <TextView
+         android:layout_height="wrap_content"
+         android:layout_width="wrap_content"
+         android:gravity="center"
+         android:background="?android:attr/selectableItemBackground"
+         android:clickable="true"
+         android:textColor="#0088FF"
+         android:focusable="true"
+         android:id="@+id/linkMelsiir"
+         android:text="melsiir" />
+
+</LinearLayout>
