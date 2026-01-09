@@ -18,7 +18,7 @@ public class GoBoardKeyboardService extends InputMethodService implements Keyboa
     @Override
     public View onCreateInputView() {
         kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_view, null);
-        keyboard = new Keyboard(this, R.xml.qwerty_keyboard);
+        keyboard = new Keyboard(this, R.xml.coding_keyboard);
         kv.setKeyboard(keyboard);
         kv.setOnKeyboardActionListener(this);
         return kv;

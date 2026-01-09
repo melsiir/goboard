@@ -25,7 +25,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         // Add title
         TextView title = new TextView(this);
-        title.setText("GoBoard Settings");
+        title.setText("GoBoard Coding Keyboard");
         title.setTextSize(24);
         title.setTextColor(ContextCompat.getColor(this, R.color.md_theme_light_primary));
         title.setPadding(0, 0, 0, 32);
@@ -33,7 +33,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         // Add description
         TextView description = new TextView(this);
-        description.setText("Enable GoBoard Keyboard in your device settings to start using it.");
+        description.setText("A keyboard optimized for coding with easy access to programming symbols and operators. Enable GoBoard Keyboard in your device settings to start using it.");
         description.setTextSize(16);
         description.setTextColor(ContextCompat.getColor(this, R.color.md_theme_light_onSurface));
         description.setPadding(0, 0, 0, 48);
