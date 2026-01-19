@@ -11,4 +11,4 @@
     android:labelTextSize="18sp"
     android:shadowRadius="0.0"
     android:popupLayout="@layout/input_method_extract_view"
-    android:background="@color/md_theme_surfaceVariant" />
+    android:background="?attr/colorSurfaceContainer" />

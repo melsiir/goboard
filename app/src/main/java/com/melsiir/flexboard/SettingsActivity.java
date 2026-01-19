@@ -1,4 +1,4 @@
-package com.melsiir.goboard;
+package com.melsiir.flexboard;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +19,8 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // for consistancy
+        // WindowCompat.enableEdgeToEdge(getWindow());
 
         // Create a Material 3 themed layout programmatically
         LinearLayout layout = new LinearLayout(this);
@@ -28,7 +30,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         // Add title
         TextView title = new TextView(this);
-        title.setText("GoBoard");
+        title.setText("Flexboard");
         title.setTextSize(24);
         title.setTextColor(ContextCompat.getColor(this, R.color.md_theme_primary));
         title.setPadding(0, 0, 0, 32);
@@ -50,7 +52,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         // Add button to enable keyboard directly
         Button enableButton = new Button(this);
-        enableButton.setText("Enable GoBoard Keyboard");
+        enableButton.setText("Enable Flexboard Keyboard");
         enableButton.setBackgroundColor(ContextCompat.getColor(this, R.color.md_theme_secondaryContainer));
         enableButton.setTextColor(ContextCompat.getColor(this, R.color.md_theme_onSecondaryContainer));
         enableButton.setOnClickListener(new View.OnClickListener() {

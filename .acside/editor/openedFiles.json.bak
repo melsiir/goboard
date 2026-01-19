@@ -1,7 +1,7 @@
 {
   "allFiles": [
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/goboard/app/src/main/java/com/melsiir/goboard/MainActivity.java",
+      "file": "/storage/emulated/0/AndroidIDEProjects/flexboard/app/src/main/java/com/melsiir/flexboard/MainActivity.java",
       "selection": {
         "end": {
           "column": 0,
@@ -16,5 +16,5 @@
       }
     }
   ],
-  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/goboard/app/src/main/java/com/melsiir/goboard/MainActivity.java"
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/flexboard/app/src/main/java/com/melsiir/flexboard/MainActivity.java"
 }

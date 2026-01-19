@@ -1,4 +1,4 @@
-package com.melsiir.goboard;
+package com.melsiir.flexboard;
 
 import android.content.Context;
 import android.graphics.Canvas;

@@ -3,14 +3,14 @@ plugins {
 }
 
 android {
-    compileSdk 34
-    // buildToolsVersion "34.0.4"
-  	namespace "com.melsiir.goboard"
+    compileSdk 36
+    buildToolsVersion  "36.1.0"
+  	namespace "com.melsiir.flexboard"
 
     defaultConfig {
-        applicationId "com.melsiir.goboard"
+        applicationId "com.melsiir.flexboard"
         minSdk 28
-        targetSdk 34
+        targetSdk 35
         versionCode 1
         versionName "1.0"
     }
@@ -22,8 +22,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
 
 	buildFeatures {
