@@ -1,0 +1,101 @@
+import groovy.json.JsonOutput
+
+allprojects {
+    afterEvaluate { project ->
+        if (!project.hasProperty('android') && !project.hasProperty('sourceSets')) return
+
+        project.task('generateJavaConfigJson') {
+            doLast {
+                def classPaths = new HashSet()
+                def docPaths = new HashSet()
+
+                // 1. Resolve Runtime Dependencies
+                def targetConfigs = project.configurations.findAll {
+                    it.canBeResolved && (it.name.endsWith("RuntimeClasspath") || it.name == "runtimeClasspath")
+                }
+
+                targetConfigs.each { config ->
+                    try {
+                        config.resolvedConfiguration.resolvedArtifacts.each { artifact ->
+                            classPaths << artifact.file.absolutePath
+                            def components = project.dependencies.createArtifactResolutionQuery()
+                                .forComponents(artifact.id.componentIdentifier)
+                                .withArtifacts(JvmLibrary, SourcesArtifact)
+                                .execute()
+
+                            components.resolvedComponents.each { result ->
+                                result.getArtifacts(SourcesArtifact).each { sourceArtifact ->
+                                    if (sourceArtifact instanceof ResolvedArtifactResult) {
+                                        docPaths << sourceArtifact.file.absolutePath
+                                    }
+                                }
+                            }
+                        }
+                    } catch (Exception e) { }
+                }
+
+                // 2. Collect Android Specifics (including R files)
+                if (project.hasProperty('android')) {
+                    def android = project.extensions.getByName('android')
+                    android.getBootClasspath().each { classPaths << it.absolutePath }
+
+                    // Add R.java / R.jar locations
+                    def variants = []
+                    if (project.android.hasProperty('applicationVariants')) {
+                        variants = project.android.applicationVariants
+                    } else if (project.android.hasProperty('libraryVariants')) {
+                        variants = project.android.libraryVariants
+                    }
+
+                    variants.each { variant ->
+                        variant.outputs.each { output ->
+                            def procRes = output.processResources
+
+                            // Legacy AGP: R.java source directory
+                            if (procRes.hasProperty('sourceOutputDir')) {
+                                def srcDir = procRes.sourceOutputDir
+                                if (srcDir instanceof File && srcDir.exists()) {
+                                    docPaths << srcDir.absolutePath
+                                }
+                            }
+
+                            // Modern AGP: R.jar file
+                            if (procRes.hasProperty('RClassOutputJar')) {
+                                // Accessing the file via the Provider API
+                                def jarFile = procRes.RClassOutputJar.get().asFile
+                                if (jarFile.exists()) {
+                                    classPaths << jarFile.absolutePath
+                                }
+                            }
+                        }
+                    }
+
+                    android.sourceSets.each { sourceSet ->
+                        def dirs = sourceSet.hasProperty('javaDirectories') ?
+                                   sourceSet.javaDirectories : sourceSet.java.srcDirs
+                        dirs.each { if (it.exists()) docPaths << it.absolutePath }
+                    }
+                }
+
+                // 3. Standard Java Source Sets
+                if (project.hasProperty('sourceSets')) {
+                    project.sourceSets.each { sourceSet ->
+                        sourceSet.allSource.srcDirs.each { if (it.exists()) docPaths << it.absolutePath }
+                    }
+                }
+
+                def configMap = [
+                    java: [
+                        classPath: classPaths.sort(),
+                        docPath:   docPaths.sort()
+                    ]
+                ]
+
+                def jsonFile = file("${project.buildDir}/java-dependencies.json")
+                jsonFile.parentFile.mkdirs()
+                jsonFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(configMap))
+                println "[Success] ${project.name}: JSON generated with R files at ${jsonFile.path}"
+            }
+        }
+    }
+}

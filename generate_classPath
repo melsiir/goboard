@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ANDROID_SDK="$HOME/Android/Sdk"
+ANDROID_PLATFORM="android-36"
+APP_DIR="app"
+CLASSPATH_FILE="$APP_DIR/.classpath"
+
+echo "▶ Generating Android classpath for jdtls..."
+
+OUTPUT=$(
+  ./gradlew :app:printCompileClasspath --no-configuration-cache |
+    sed -n '/---START---/,/---END---/p' |
+    sed '1d;$d'
+)
+
+TMP_ENTRIES=()
+
+while IFS= read -r line; do
+  [[ -z "$line" ]] && continue
+
+  if [[ "$line" == *.aar ]]; then
+    AAR_DIR="$(dirname "$line")"
+    CLASSES_JAR="$AAR_DIR/classes.jar"
+
+    if [[ ! -f "$CLASSES_JAR" ]]; then
+      unzip -oq "$line" classes.jar -d "$AAR_DIR"
+    fi
+
+    TMP_ENTRIES+=("$CLASSES_JAR")
+  else
+    TMP_ENTRIES+=("$line")
+  fi
+done <<<"$OUTPUT"
+
+cat >"$CLASSPATH_FILE" <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+  <classpathentry kind="output" path="bin/default"/>
+  <classpathentry kind="src" path="src/main/java"/>
+  <classpathentry kind="src" path="build/generated/source/buildConfig/debug"/>
+  <classpathentry kind="src" path="build/generated/data_binding_base_class_source_out/debug"/>
+  <classpathentry kind="lib" path="$ANDROID_SDK/platforms/$ANDROID_PLATFORM/android.jar"/>
+  <classpathentry kind="lib" path="$ANDROID_SDK/platforms/$ANDROID_PLATFORM/core-for-system-modules.jar"/>
+EOF
+
+for entry in "${TMP_ENTRIES[@]}"; do
+  echo "  <classpathentry kind=\"lib\" path=\"$entry\"/>" >>"$CLASSPATH_FILE"
+done
+
+echo "</classpath>" >>"$CLASSPATH_FILE"
+
+echo "✔ $CLASSPATH_FILE generated"
